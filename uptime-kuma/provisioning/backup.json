@@ -1,10 +1,10 @@
 {
-    "version": "1.11.3",
+    "version": "1.11.4",
     "notificationList": [
         {
             "id": 1,
             "name": "QART Email SMTP",
-            "config": "{\"name\":\"QART Email SMTP\",\"type\":\"smtp\",\"isDefault\":false,\"smtpSecure\":false,\"smtpHost\":\"smtp.office365.com\",\"smtpPort\":587,\"smtpUsername\":\"\",\"smtpPassword\":\"\",\"smtpFrom\":\"\\\"\",\"smtpTo\":\"\",\"applyExisting\":false}",
+            "config": "{\"name\":\"QART Email SMTP\",\"type\":\"smtp\",\"isDefault\":false,\"smtpSecure\":false,\"smtpHost\":\"smtp.office365.com\",\"smtpPort\":587,\"smtpUsername\":\"alert@qart.pt\",\"smtpPassword\":\"Pol42289\",\"smtpFrom\":\"\\\"QART Alert\\\" <alert@qart.pt>\",\"smtpTo\":\"gustavoporto@ya.ru\",\"applyExisting\":true}",
             "active": 1,
             "userId": 1,
             "isDefault": 0
@@ -28,11 +28,13 @@
             "type": "keyword",
             "interval": 60,
             "retryInterval": 60,
-            "keyword": "QA00CO0001",
+            "keyword": "QA00",
             "ignoreTls": false,
             "upsideDown": false,
             "maxredirects": 10,
-            "accepted_statuscodes": ["200"],
+            "accepted_statuscodes": [
+                "200"
+            ],
             "dns_resolve_type": "A",
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
@@ -57,7 +59,7 @@
             "url": "https://clientapi.qart.pt/measurements/last/000000000001/3",
             "method": "GET",
             "body": null,
-            "headers": "{\n    \"Authorization\": \"\"\n}",
+            "headers": "{\n    \"Authorization\": \"bNCYaVGGuo82vXPdt7EC3fCgc3MHnDA5DmJ9FJR7HoGcDjEiNPBQnd3o3VaGbKMZ\"\n}",
             "basic_auth_user": null,
             "basic_auth_pass": null,
             "hostname": null,
@@ -72,7 +74,9 @@
             "ignoreTls": false,
             "upsideDown": false,
             "maxredirects": 10,
-            "accepted_statuscodes": ["200"],
+            "accepted_statuscodes": [
+                "200"
+            ],
             "dns_resolve_type": "A",
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
@@ -97,7 +101,7 @@
             "url": "https://pgil.cml.qart.pt/lastmeasurements",
             "method": "GET",
             "body": null,
-            "headers": "{\n    \"apikey\": \"\"\n}",
+            "headers": "{\n    \"apikey\": \"f7db96b7-1f46-4c51-a606-4c80988c325f\"\n}",
             "basic_auth_user": null,
             "basic_auth_pass": null,
             "hostname": null,
@@ -112,7 +116,9 @@
             "ignoreTls": false,
             "upsideDown": false,
             "maxredirects": 10,
-            "accepted_statuscodes": ["200"],
+            "accepted_statuscodes": [
+                "200"
+            ],
             "dns_resolve_type": "A",
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
@@ -137,7 +143,7 @@
             "url": "https://clientapi.qart.pt/measurements/last/all",
             "method": "GET",
             "body": null,
-            "headers": "{\n    \"Authorization\": \"\"\n}",
+            "headers": "{\n    \"Authorization\": \"bNCYaVGGuo82vXPdt7EC3fCgc3MHnDA5DmJ9FJR7HoGcDjEiNPBQnd3o3VaGbKMZ\"\n}",
             "basic_auth_user": null,
             "basic_auth_pass": null,
             "hostname": null,
@@ -148,11 +154,13 @@
             "type": "keyword",
             "interval": 60,
             "retryInterval": 60,
-            "keyword": "000000000001",
+            "keyword": "191112000034",
             "ignoreTls": false,
             "upsideDown": false,
             "maxredirects": 10,
-            "accepted_statuscodes": ["200"],
+            "accepted_statuscodes": [
+                "200"
+            ],
             "dns_resolve_type": "A",
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
@@ -192,7 +200,93 @@
             "ignoreTls": false,
             "upsideDown": false,
             "maxredirects": 10,
-            "accepted_statuscodes": ["200"],
+            "accepted_statuscodes": [
+                "200"
+            ],
+            "dns_resolve_type": "A",
+            "dns_resolve_server": "1.1.1.1",
+            "dns_last_result": null,
+            "pushToken": null,
+            "notificationIDList": {
+                "1": true
+            },
+            "tags": [
+                {
+                    "id": 5,
+                    "monitor_id": 5,
+                    "tag_id": 1,
+                    "value": "",
+                    "name": "QART",
+                    "color": "#D97706"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Open Data CMC - Last Measurements",
+            "url": "https://opendata-cascais.qart.pt/lastmeasurements",
+            "method": "GET",
+            "body": null,
+            "headers": null,
+            "basic_auth_user": null,
+            "basic_auth_pass": null,
+            "hostname": null,
+            "port": null,
+            "maxretries": 2,
+            "weight": 2000,
+            "active": 1,
+            "type": "http",
+            "interval": 60,
+            "retryInterval": 60,
+            "keyword": "",
+            "ignoreTls": false,
+            "upsideDown": false,
+            "maxredirects": 10,
+            "accepted_statuscodes": [
+                "200"
+            ],
+            "dns_resolve_type": "A",
+            "dns_resolve_server": "1.1.1.1",
+            "dns_last_result": null,
+            "pushToken": null,
+            "notificationIDList": {
+                "1": true
+            },
+            "tags": [
+                {
+                    "id": 6,
+                    "monitor_id": 6,
+                    "tag_id": 1,
+                    "value": "",
+                    "name": "QART",
+                    "color": "#D97706"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Thermometric Portal",
+            "url": "https://thermometric.qs.pt/login",
+            "method": "GET",
+            "body": null,
+            "headers": null,
+            "basic_auth_user": null,
+            "basic_auth_pass": null,
+            "hostname": null,
+            "port": null,
+            "maxretries": 0,
+            "weight": 2000,
+            "active": 1,
+            "type": "keyword",
+            "interval": 60,
+            "retryInterval": 60,
+            "keyword": "Altice Thermometric",
+            "ignoreTls": false,
+            "upsideDown": false,
+            "maxredirects": 10,
+            "accepted_statuscodes": [
+                "200"
+            ],
             "dns_resolve_type": "A",
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
@@ -200,8 +294,130 @@
             "notificationIDList": {},
             "tags": [
                 {
-                    "id": 5,
-                    "monitor_id": 5,
+                    "id": 7,
+                    "monitor_id": 7,
+                    "tag_id": 2,
+                    "value": "",
+                    "name": "Thermometric",
+                    "color": "#4B5563"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Thermometric API",
+            "url": "https://api.thermometric.qs.pt",
+            "method": "GET",
+            "body": null,
+            "headers": null,
+            "basic_auth_user": null,
+            "basic_auth_pass": null,
+            "hostname": null,
+            "port": null,
+            "maxretries": 0,
+            "weight": 2000,
+            "active": 1,
+            "type": "http",
+            "interval": 60,
+            "retryInterval": 60,
+            "keyword": null,
+            "ignoreTls": false,
+            "upsideDown": false,
+            "maxredirects": 10,
+            "accepted_statuscodes": [
+                "401"
+            ],
+            "dns_resolve_type": "A",
+            "dns_resolve_server": "1.1.1.1",
+            "dns_last_result": null,
+            "pushToken": null,
+            "notificationIDList": {},
+            "tags": [
+                {
+                    "id": 8,
+                    "monitor_id": 8,
+                    "tag_id": 2,
+                    "value": "",
+                    "name": "Thermometric",
+                    "color": "#4B5563"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "name": "EIOT1",
+            "url": "http://eiot1.qart.pt/about",
+            "method": "GET",
+            "body": null,
+            "headers": null,
+            "basic_auth_user": null,
+            "basic_auth_pass": null,
+            "hostname": null,
+            "port": null,
+            "maxretries": 0,
+            "weight": 2000,
+            "active": 1,
+            "type": "http",
+            "interval": 60,
+            "retryInterval": 60,
+            "keyword": null,
+            "ignoreTls": false,
+            "upsideDown": false,
+            "maxredirects": 10,
+            "accepted_statuscodes": [
+                "200"
+            ],
+            "dns_resolve_type": "A",
+            "dns_resolve_server": "1.1.1.1",
+            "dns_last_result": null,
+            "pushToken": null,
+            "notificationIDList": {
+                "1": true
+            },
+            "tags": [
+                {
+                    "id": 9,
+                    "monitor_id": 9,
+                    "tag_id": 1,
+                    "value": "",
+                    "name": "QART",
+                    "color": "#D97706"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "name": "EIOT2",
+            "url": "http://eiot2.qart.pt/about",
+            "method": "GET",
+            "body": null,
+            "headers": null,
+            "basic_auth_user": null,
+            "basic_auth_pass": null,
+            "hostname": null,
+            "port": null,
+            "maxretries": 0,
+            "weight": 2000,
+            "active": 1,
+            "type": "http",
+            "interval": 60,
+            "retryInterval": 60,
+            "keyword": null,
+            "ignoreTls": false,
+            "upsideDown": false,
+            "maxredirects": 10,
+            "accepted_statuscodes": [
+                "200"
+            ],
+            "dns_resolve_type": "A",
+            "dns_resolve_server": "1.1.1.1",
+            "dns_last_result": null,
+            "pushToken": null,
+            "notificationIDList": {},
+            "tags": [
+                {
+                    "id": 10,
+                    "monitor_id": 10,
                     "tag_id": 1,
                     "value": "",
                     "name": "QART",
