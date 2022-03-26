@@ -1,5 +1,5 @@
 {
-    "version": "1.11.4",
+    "version": "1.13.1",
     "notificationList": [
         {
             "id": 1,
@@ -39,9 +39,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 1,
@@ -81,9 +79,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 2,
@@ -123,9 +119,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 3,
@@ -165,9 +159,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 4,
@@ -207,9 +199,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 5,
@@ -249,9 +239,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 6,
@@ -346,7 +334,7 @@
         {
             "id": 9,
             "name": "EIOT1",
-            "url": "http://eiot1.qart.pt/about",
+            "url": "https://eiot1.qart.pt/about",
             "method": "GET",
             "body": null,
             "headers": null,
@@ -371,9 +359,7 @@
             "dns_resolve_server": "1.1.1.1",
             "dns_last_result": null,
             "pushToken": null,
-            "notificationIDList": {
-                "1": true
-            },
+            "notificationIDList": {},
             "tags": [
                 {
                     "id": 9,
@@ -388,7 +374,7 @@
         {
             "id": 10,
             "name": "EIOT2",
-            "url": "http://eiot2.qart.pt/about",
+            "url": "https://eiot2.qart.pt/about",
             "method": "GET",
             "body": null,
             "headers": null,
