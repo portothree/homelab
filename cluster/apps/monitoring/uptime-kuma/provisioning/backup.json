@@ -1,15 +1,6 @@
 {
     "version": "1.13.1",
-    "notificationList": [
-        {
-            "id": 1,
-            "name": "QART Email SMTP",
-            "config": "{\"name\":\"QART Email SMTP\",\"type\":\"smtp\",\"isDefault\":false,\"smtpSecure\":false,\"smtpHost\":\"smtp.office365.com\",\"smtpPort\":587,\"smtpUsername\":\"alert@qart.pt\",\"smtpPassword\":\"Pol42289\",\"smtpFrom\":\"\\\"QART Alert\\\" <alert@qart.pt>\",\"smtpTo\":\"gustavoporto@ya.ru\",\"applyExisting\":true}",
-            "active": 1,
-            "userId": 1,
-            "isDefault": 0
-        }
-    ],
+    "notificationList": [],
     "monitorList": [
         {
             "id": 1,
