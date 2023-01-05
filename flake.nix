@@ -84,7 +84,7 @@
         };
       };
       packages.${system} = {
-        k1x = k1x.packages.${system}.default;
+        k1x = k1x.packages.${system}.k1x;
         devenv = devenv.packages.${system}.devenv;
       };
       nixosConfigurations = {
