@@ -1,0 +1,35 @@
+!#/bin/bash
+
+export COMPANY_VPN_HOST="vpn03.sunrise.net/VPN_sunrise"
+DISABLE_MAGIC_FUNCTIONS=true
+
+function vpn-up() {
+  if [[ -z $COMPANY_VPN_HOST ]]
+  then
+    echo "Please set COMPANY_VPN_HOST env var"
+    return
+  fi
+  if [[ "$1" == "split" ]]
+  then
+    echo "Starting the vpn with split tunneling ..."
+    sudo openconnect --background --script='~/sunrise-vpn-slice' --user=porto $COMPANY_VPN_HOST
+  else
+    echo "Starting the vpn ..."
+    sudo openconnect --background --user=porto $COMPANY_VPN_HOST
+  fi
+}
+
+function vpn-split() {
+  vpn-up split
+}
+
+function vpn-down() {
+  sudo kill -2 `pgrep openconnect`
+}
+
+function vpn-fix(){
+ IFACE=en0
+ sudo ifconfig $IFACE down
+ sudo route flush
+ sudo ifconfig $IFACE up
+}

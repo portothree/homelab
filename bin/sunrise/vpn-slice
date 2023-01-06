@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# Script that starts vpn-slice with
+# the hostnames/subnets that need to
+# be accessed via the VPN.
+#
+#
+vpn-slice --banner --verbose \
+192.168.192.0/24 \
+10.192.0.0/16 \
+172.16.77.25 \
+172.16.77.26 \
+192.168.208.0/24 \
+192.168.209.0/24 \
+192.168.190.0/24 \
+192.168.55.0/24 \
+35.246.239.176 \
+prfe01_rw.swi.srse.net \
+pkg-xip-int.swi.srse.net \
+swi.srse.net \
+extranet.swi.srse.net \
+nexus.sunrise.ch \
+bitbucket.swi.srse.net \
+p-login-03.swi.srse.net \
+yl-service.swi.srse.net \
+mailhost.swi.srse.net \
+api.ocp-t-trust-01.swi.srse.net \
+api.ocp-p-trust-01.swi.srse.net \
+idcheckportal-yol-t01.sunrise.ch \
+idcheckportal-yol-t02.sunrise.ch \
+idcheckportal-yol-t03.sunrise.ch \
+jenkins-yol.apps.ocp-t-infra-01.swi.srse.net \
+clustercfg.yol-ms-redis-test-01.63ykka.memorydb.eu-central-1.amazonaws.com \
+clustercfg.yol-ms-bull-redis-test-01.63ykka.memorydb.eu-central-1.amazonaws.com \
+yol-linecheck-test.digitalapps.ocp-t-trust.swi.srse.net \
+api.ocp-t-infra-01.swi.srse.net \
+oid.swi.srse.net \
+p-orex-clst-b1.swi.srse.net \
+cc-rator.sunrise.ch \
+p-orex-clst-bs.swi.srse.net \
+p-orex-clst-as.swi.srse.net \
+hdrive2.isilon.swi.srse.net \
+test.dev.yallo.ch \
+jit-api-internal-libertyglobal-com.upc.biz \
+idcheckportal-yol.swi.srse.net \
+iam.swi.srse.net \
+t-orap-db-01.swi.srse.net \
+35.246.239.176/32 \
+pkg-xip-int.swi.srse.net \
+dev-som-api-endpoint.liberty.biz
+~                                 
