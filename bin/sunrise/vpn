@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+VALID_ARGS=$(getopt -o udf --long up,down,fix -- "$@")
 export USER="porto"
 export COMPANY_VPN_HOST="vpn03.sunrise.net/VPN_sunrise"
 
@@ -27,8 +28,30 @@ function vpn-down() {
 }
 
 function vpn-fix() {
-	IFACE=en0
+	IFACE=enp34s0
 	sudo ifconfig $IFACE down
 	sudo route flush
 	sudo ifconfig $IFACE up
 }
+
+eval set -- "$VALID_ARGS"
+while true; do
+	case "$1" in
+	-u | --up)
+		vpn-up "$2"
+		shift
+		;;
+	-d | --down)
+		vpn-down
+		shift
+		;;
+	-f | --fix)
+		vpn-fix
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
