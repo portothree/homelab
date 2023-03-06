@@ -12,10 +12,10 @@ function vpn-up() {
 
 	if [[ "$1" == "split" ]]; then
 		echo "Starting the vpn with split tunneling ..."
-		sudo openconnect --background --script=./vpn-slice --user=$USER $COMPANY_VPN_HOST
+		sudo openconnect --script=./vpn-slice --user=$USER $COMPANY_VPN_HOST
 	else
 		echo "Starting the vpn ..."
-		sudo openconnect --background --user=$USER $COMPANY_VPN_HOST
+		sudo openconnect --user=$USER $COMPANY_VPN_HOST
 	fi
 }
 
