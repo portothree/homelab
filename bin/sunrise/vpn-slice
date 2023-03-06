@@ -78,4 +78,5 @@ vpn-slice --banner --verbose \
 	console-openshift-console.apps.ocp-t-trust-01.swi.srse.net \
 	oauth-openshift.apps.ocp-t-trust-01.swi.srse.net \
 	argocd-server-digital-yol-gitops.apps.ocp-t-infra-01.swi.srse.net \
-	kibana-openshift-logging.apps.ocp-t-trust-01.swi.srse.net
+	kibana-openshift-logging.apps.ocp-t-trust-01.swi.srse.net \
+	sso.digitalapps.ocp-t-dmz.swi.srse.net
