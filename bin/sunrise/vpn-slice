@@ -10,6 +10,7 @@ vpn-slice --banner --verbose \
 	192.168.190.0/24 \
 	192.168.55.0/24 \
 	35.246.239.176 \
+	35.246.239.176/32 \
 	prfe01_rw.swi.srse.net \
 	pkg-xip-int.swi.srse.net \
 	swi.srse.net \
@@ -24,7 +25,6 @@ vpn-slice --banner --verbose \
 	idcheckportal-yol-t01.sunrise.ch \
 	idcheckportal-yol-t02.sunrise.ch \
 	idcheckportal-yol-t03.sunrise.ch \
-	jenkins-yol.apps.ocp-t-infra-01.swi.srse.net \
 	clustercfg.yol-ms-redis-test-01.63ykka.memorydb.eu-central-1.amazonaws.com \
 	clustercfg.yol-ms-bull-redis-test-01.63ykka.memorydb.eu-central-1.amazonaws.com \
 	yol-linecheck-test.digitalapps.ocp-t-trust.swi.srse.net \
@@ -39,7 +39,42 @@ vpn-slice --banner --verbose \
 	jit-api-internal-libertyglobal-com.upc.biz \
 	idcheckportal-yol.swi.srse.net \
 	iam.swi.srse.net \
+	iam \
+	myiam.swi.srse.net \
 	t-orap-db-01.swi.srse.net \
-	35.246.239.176/32 \
 	pkg-xip-int.swi.srse.net \
-	dev-som-api-endpoint.liberty.biz
+	dev-som-api-endpoint.liberty.biz \
+	jenkins-yol.apps.ocp-t-infra-01.swi.srse.net \
+	jenkins-yol.app.os-t1.swi.srse.net \
+	console-openshift-console.apps.ocp-t-infra-01.swi.srse.net \
+	console-openshift-console.apps.ocp-t-trust-01.swi.srse.net \
+	oauth-openshift.apps.ocp-t-trust-01.swi.srse.net \
+	argocd-server-digital-yol-gitops.apps.ocp-t-infra-01.swi.srse.net \
+	checkmk2 \
+	confluence \
+	funkylogs \
+	h1754 \
+	huma.intern.upc.ch \
+	jira \
+	jira-test \
+	myeasy \
+	mygo \
+	octane \
+	os-t1 \
+	pacserver \
+	pkg-svn1 \
+	proxy1 \
+	proxy2 \
+	p-rudi-as-01 \
+	sso.app.os-t1.swi.srse.net \
+	upcit.ds.upc.biz \
+	weshare-p.swi.srse.net \
+	yol-address-lookup-preprod.digitalapps.ocp-t-trust.swi.srse.net \
+	yol-tv-signup-preprod.digitalapps.ocp-t-trust.swi.srse.net \
+	yol-linecheck-preprod.digitalapps.ocp-t-trust.swi.srse.net \
+	yol-capture-info-nj-test.digitalapps.ocp-t-trust.swi.srse.net \
+	yol-identity-test.digitalapps.ocp-t-trust.swi.srse.net \
+	yol-ms-doc-db-test-01.cluster-ctf788duzdgj.eu-central-1.docdb.amazonaws.com \
+	console-openshift-console.apps.ocp-t-trust-01.swi.srse.net \
+	oauth-openshift.apps.ocp-t-trust-01.swi.srse.net \
+	argocd-server-digital-yol-gitops.apps.ocp-t-infra-01.swi.srse.net
