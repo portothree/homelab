@@ -91,7 +91,7 @@
     };
   };
   environment = {
-    systemPackages = with pkgs; [ wget curl xsecurelock tailscale ];
+    systemPackages = with pkgs; [ wget curl xsecurelock tailscale lm_sensors ];
     variables = { EDITOR = "nvim"; };
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
