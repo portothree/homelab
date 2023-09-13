@@ -42,6 +42,7 @@
     latitude = 38.736946;
     longitude = -9.142685;
   };
+  programs.dconf.enable = true;
   services = {
     clight = { enable = false; };
     openssh = {
@@ -68,11 +69,10 @@
     };
     openvpn = {
       servers = {
-        vowild = {
-          config = "config /root/nixos/openvpn/vowild.ovpn";
-        };
+        vowild = { config = "config /root/nixos/openvpn/vowild.ovpn"; };
       };
     };
+    spice-vdagentd = { enable = true; };
   };
   systemd = {
     network = {
@@ -84,13 +84,26 @@
     users = {
       porto = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "audio" "dialout" "docker" "plugdev" ];
+        extraGroups =
+          [ "wheel" "audio" "dialout" "docker" "plugdev" "libvirtd" ];
         shell = pkgs.zsh;
       };
     };
   };
   environment = {
-    systemPackages = with pkgs; [ wget curl xsecurelock tailscale ];
+    systemPackages = with pkgs; [
+      wget
+      curl
+      xsecurelock
+      tailscale
+      virt-manager
+      virt-viewer
+      spice
+      spice-gtk
+      spice-protocol
+      win-virtio
+      win-spice
+    ];
     variables = { EDITOR = "nvim"; };
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
@@ -99,6 +112,15 @@
       enable = true;
       liveRestore = false;
     };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
   };
   fonts = { fonts = with pkgs; [ fira-code siji ]; };
   sound = { enable = true; };
