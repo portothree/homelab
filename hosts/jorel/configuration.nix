@@ -38,6 +38,7 @@
     longitude = -9.142685;
   };
   services = {
+    intune.enable = true;
     clight = { enable = false; };
     openssh = {
       enable = true;

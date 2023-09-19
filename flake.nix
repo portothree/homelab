@@ -17,6 +17,12 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-intune.follows = "nixpkgs";
+    intune-patch = {
+      url =
+        "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/221628.patch";
+      flake = false;
+    };
     nixos-hardware.url = "github:NixOs/nixos-hardware/master";
     microvm = {
       url = "github:astro/microvm.nix";
@@ -26,8 +32,8 @@
     k1x = { url = "github:p8sco/k1x"; };
     devenv = { url = "github:cachix/devenv/v0.5"; };
   };
-  outputs = { self, nixpkgs, nixos-hardware, microvm, pre-commit-hooks, k1x
-    , devenv, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-intune, intune-patch
+    , nixos-hardware, microvm, pre-commit-hooks, k1x, devenv, ... }@inputs:
     let
       system = "x86_64-linux";
       mkNixosSystem = pkgs:
@@ -35,6 +41,7 @@
         pkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs self; };
+          channelName = "nixpkgs-intune";
           modules = [
             {
               nix.registry.n.flake = pkgs;
