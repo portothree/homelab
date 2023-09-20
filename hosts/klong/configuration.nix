@@ -15,15 +15,19 @@
     };
   };
   networking = {
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [ networkmanager-openvpn ];
+    };
     useDHCP = false;
     interfaces = { wlp0s20f3 = { useDHCP = true; }; };
-    nameservers = [ "100.100.100.100" ];
-    search = [ "tailea386.ts.net" ];
+    nameservers = [ ];
+    search = [ ];
     firewall = {
       enable = true;
       allowedTCPPorts = [ ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
-      trustedInterfaces = [ "tailscale0" ];
+      allowedUDPPorts = [ ];
+      trustedInterfaces = [ ];
       checkReversePath = false;
     };
     wireless = {
@@ -44,7 +48,7 @@
     };
   };
   environment = {
-    systemPackages = with pkgs; [ wget curl xsecurelock tailscale ];
+    systemPackages = with pkgs; [ wget curl xsecurelock ];
     variables = { EDITOR = "nvim"; };
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
@@ -62,7 +66,6 @@
       };
       displayManager = { startx = { enable = true; }; };
     };
-    tailscale.enable = true;
     blueman.enable = true;
   };
   sound.enable = true;
