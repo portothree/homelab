@@ -39,24 +39,82 @@
     let system = "x86_64-linux";
     in flake-utils-plus.lib.mkFlake {
       inherit self inputs;
-
       channelsConfig = { allowUnfree = true; };
-
       channels.nixpkgs-intune.patches = [
         #intune-patch
         ./intune.patch
       ];
+      outputsBuilder = channels: {
+        packages.${system} = {
+          k1x = k1x.packages.${system}.default;
+          inherit (devenv.packages.${system}.devenv)
+          ;
+        };
+      };
       hosts = {
         klong = {
           inherit system;
           channelName = "nixpkgs-intune";
           modules = [
-            {
-              nixpkgs.config.allowUnfree = true;
-              networking = { hostName = "klong"; };
-            }
+            { networking = { hostName = "klong"; }; }
             ./hosts/klong/configuration.nix
           ];
+        };
+        jorel = {
+          inherit system;
+          channelName = "nixpkgs-intune";
+          modules = [
+            { networking = { hostName = "jorel"; }; }
+            ./hosts/jorel/configuration.nix
+            nixos-hardware.nixosModules.common-cpu-amd
+            microvm.nixosModules.host
+          ];
+        };
+        oraculo = {
+          channelName = "nixpkgs";
+          modules = [
+            microvm.nixosModules.microvm
+            {
+              networking = { hostName = "oraculo"; };
+              microvm = {
+                hypervisor = "qemu";
+                interfaces = [{
+                  type = "user";
+                  id = "microvm-a1";
+                  mac = "02:00:00:00:00:01";
+                }];
+              };
+            }
+            ({ config, pkgs, ... }: {
+              system.stateVersion = config.system.nixos.version;
+              users = { users = { root = { password = ""; }; }; };
+              services = {
+                getty.helpLine = ''
+                  Log in as "root" with an empty password.
+                  Type Ctrl-a c to switch to the qemu console
+                  and `quit` to stop the VM.
+                '';
+              };
+              nix = {
+                enable = true;
+                package = pkgs.nixFlakes;
+                extraOptions = ''
+                  experimental-features = nix-command flakes
+                '';
+                registry = { nixpkgs.flake = nixpkgs; };
+              };
+            })
+          ];
+        };
+      };
+      checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixfmt = {
+            enable = true;
+            excludes = [ "hardware-configuration.nix" ];
+          };
+          shellcheck = { enable = true; };
         };
       };
     };
