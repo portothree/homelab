@@ -39,6 +39,11 @@
   };
   services = {
     intune.enable = true;
+    openvpn = {
+      servers = {
+        vowild = { config = "config /root/nixos/openvpn/vowild.ovpn"; };
+      };
+    };
     clight = { enable = false; };
     openssh = {
       enable = true;
@@ -59,7 +64,7 @@
       '';
     };
     tailscalec = {
-      enable = true;
+      enable = false;
       searchAddress = "tailea386.ts.net";
     };
   };
@@ -79,7 +84,7 @@
     };
   };
   environment = {
-    systemPackages = with pkgs; [ wget curl xsecurelock ];
+    systemPackages = with pkgs; [ wget curl xsecurelock microsoft-edge ];
     variables = { EDITOR = "nvim"; };
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
@@ -103,7 +108,19 @@
       '';
     };
   };
-  nixpkgs = { config = { pulseaudio = true; }; };
+  nixpkgs = {
+    config = { pulseaudio = true; };
+    overlays = [
+      (self: super: rec {
+        microsoft-edge = super.microsoft-edge.overrideAttrs
+          (finalAttrs: previousAttrs: {
+            postFixup = previousAttrs.postFixup + ''
+              wrapProgram "$out/bin/microsoft-edge"  --add-flags --ozone-platform-hint=auto
+            '';
+          });
+      })
+    ];
+  };
   nix = {
     enable = true;
     extraOptions = ''
