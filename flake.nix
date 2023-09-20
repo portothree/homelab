@@ -23,6 +23,7 @@
         "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/221628.patch";
       flake = false;
     };
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOs/nixos-hardware/master";
     microvm = {
       url = "github:astro/microvm.nix";
@@ -33,92 +34,28 @@
     devenv = { url = "github:cachix/devenv/v0.5"; };
   };
   outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-intune, intune-patch
-    , nixos-hardware, microvm, pre-commit-hooks, k1x, devenv, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      mkNixosSystem = pkgs:
-        { hostName, allowUnfree ? false, extraModules ? [ ] }:
-        pkgs.lib.nixosSystem {
+    , flake-utils-plus, nixos-hardware, microvm, pre-commit-hooks, k1x, devenv
+    , ... }@inputs:
+    let system = "x86_64-linux";
+    in flake-utils-plus.lib.mkFlake {
+      inherit self inputs;
+
+      channelsConfig = { allowUnfree = true; };
+
+      channels.nixpkgs-intune.patches = [
+        #intune-patch
+        ./intune.patch
+      ];
+      hosts = {
+        klong = {
           inherit system;
-          specialArgs = { inherit inputs self; };
           channelName = "nixpkgs-intune";
           modules = [
             {
-              nix.registry.n.flake = pkgs;
-              nixpkgs.config.allowUnfree = allowUnfree;
-              networking = { inherit hostName; };
+              nixpkgs.config.allowUnfree = true;
+              networking = { hostName = "klong"; };
             }
-            ./hosts/${hostName}/configuration.nix
-          ] ++ extraModules;
-        };
-      mkQemuMicroVM = pkgs:
-        { hostName, extraModules ? [ ] }:
-        pkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            microvm.nixosModules.microvm
-            {
-              networking = { inherit hostName; };
-              microvm = {
-                hypervisor = "qemu";
-                interfaces = [{
-                  type = "user";
-                  id = "microvm-a1";
-                  mac = "02:00:00:00:00:01";
-                }];
-              };
-            }
-          ] ++ extraModules;
-        };
-    in {
-      checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          nixfmt = {
-            enable = true;
-            excludes = [ "hardware-configuration.nix" ];
-          };
-          shellcheck = { enable = true; };
-        };
-      };
-      packages.${system} = {
-        k1x = k1x.packages.${system}.default;
-        inherit (devenv.packages.${system}.devenv)
-        ;
-      };
-      nixosConfigurations = {
-        jorel = mkNixosSystem nixpkgs {
-          hostName = "jorel";
-          allowUnfree = true;
-          extraModules = [
-            nixos-hardware.nixosModules.common-cpu-amd
-            microvm.nixosModules.host
-          ];
-        };
-        klong = mkNixosSystem nixpkgs { hostName = "klong"; };
-        juju = mkNixosSystem nixpkgs { hostName = "juju"; };
-        oraculo = mkQemuMicroVM nixpkgs {
-          hostName = "oraculo";
-          extraModules = [
-            ({ config, pkgs, ... }: {
-              system.stateVersion = config.system.nixos.version;
-              users = { users = { root = { password = ""; }; }; };
-              services = {
-                getty.helpLine = ''
-                  Log in as "root" with an empty password.
-                  Type Ctrl-a c to switch to the qemu console
-                  and `quit` to stop the VM.
-                '';
-              };
-              nix = {
-                enable = true;
-                package = pkgs.nixFlakes;
-                extraOptions = ''
-                  experimental-features = nix-command flakes
-                '';
-                registry = { nixpkgs.flake = nixpkgs; };
-              };
-            })
+            ./hosts/klong/configuration.nix
           ];
         };
       };

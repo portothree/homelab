@@ -49,6 +49,7 @@
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
   services = {
+    intune.enable = true;
     openssh.enable = true;
     udev = { packages = with pkgs; [ ledger-udev-rules ]; };
     xserver = {
