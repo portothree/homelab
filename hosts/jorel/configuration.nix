@@ -30,12 +30,12 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
-      trustedInterfaces = [ "tailscale0" ];
+      allowedUDPPorts = [ ];
+      trustedInterfaces = [ ];
       checkReversePath = false;
     };
-    nameservers = [ "100.100.100.100" ];
-    search = [ "tailea386.ts.net" ];
+    nameservers = [ ];
+    search = [ ];
   };
   location = {
     # Lisbon, Portugal
@@ -57,10 +57,6 @@
     };
     blueman = { enable = true; };
     udev = { packages = with pkgs; [ ledger-udev-rules android-udev-rules ]; };
-    tailscale = {
-      enable = true;
-      port = 41641;
-    };
     xserver = {
       enable = true;
       layout = "us";
@@ -71,13 +67,6 @@
         Option         "AllowIndirectGLXProtocol" "off"
         Option         "TripleBuffer" "on"
       '';
-    };
-    openvpn = {
-      servers = {
-        vowild = {
-          config = "config /root/nixos/openvpn/vowild.ovpn";
-        };
-      };
     };
   };
   systemd = {
