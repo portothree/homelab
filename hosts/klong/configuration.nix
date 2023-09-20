@@ -19,33 +19,6 @@
       enable = true;
       plugins = with pkgs; [ networkmanager-openvpn ];
     };
-    useDHCP = false;
-    interfaces = { wlp0s20f3 = { useDHCP = true; }; };
-    nameservers = [ ];
-    search = [ ];
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ ];
-      trustedInterfaces = [ ];
-      checkReversePath = false;
-    };
-    wireless = {
-      enable = true;
-      userControlled.enable = true;
-      environmentFile = "/etc/nixos/.env";
-      networks = {
-        "@WIRELESS_SSID_HOME@" = {
-          psk = "@WIRELESS_PSK_HOME@";
-          extraConfig =
-            "bssid=@WIRELESS_BSSID_HOME@,freq_list=@WIRELESS_FREQ_HOME@";
-        };
-        "@WIRELESS_SSID_PHONE_HOTSPOT@" = {
-          psk = "@WIRELESS_PSK_PHONE_HOTSPOT@";
-        };
-        "@WIRELESS_SSID_OFFICE@" = { psk = "@WIRELESS_PSK_OFFICE@"; };
-      };
-    };
   };
   environment = {
     systemPackages = with pkgs; [ wget curl xsecurelock ];
