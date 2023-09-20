@@ -17,6 +17,13 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-intune.follows = "nixpkgs";
+    intune-patch = {
+      url =
+        "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/221628.patch";
+      flake = false;
+    };
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOs/nixos-hardware/master";
     microvm = {
       url = "github:astro/microvm.nix";
@@ -26,32 +33,49 @@
     k1x = { url = "github:p8sco/k1x"; };
     devenv = { url = "github:cachix/devenv/v0.5"; };
   };
-  outputs = { self, nixpkgs, nixos-hardware, microvm, pre-commit-hooks, k1x
-    , devenv, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      mkNixosSystem = pkgs:
-        { hostName, allowUnfree ? false, extraModules ? [ ] }:
-        pkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs self; };
-          modules = [
-            {
-              nix.registry.n.flake = pkgs;
-              nixpkgs.config.allowUnfree = allowUnfree;
-              networking = { inherit hostName; };
-            }
-            ./hosts/${hostName}/configuration.nix
-          ] ++ extraModules;
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-intune, intune-patch
+    , flake-utils-plus, nixos-hardware, microvm, pre-commit-hooks, k1x, devenv
+    , ... }@inputs:
+    let system = "x86_64-linux";
+    in flake-utils-plus.lib.mkFlake {
+      inherit self inputs;
+      channelsConfig = { allowUnfree = true; };
+      channels.nixpkgs-intune.patches = [
+        #intune-patch
+        ./intune.patch
+      ];
+      outputsBuilder = channels: {
+        packages.${system} = {
+          k1x = k1x.packages.${system}.default;
+          inherit (devenv.packages.${system}.devenv)
+          ;
         };
-      mkQemuMicroVM = pkgs:
-        { hostName, extraModules ? [ ] }:
-        pkgs.lib.nixosSystem {
+      };
+      hosts = {
+        klong = {
           inherit system;
+          channelName = "nixpkgs-intune";
+          modules = [
+            { networking = { hostName = "klong"; }; }
+            ./hosts/klong/configuration.nix
+          ];
+        };
+        jorel = {
+          inherit system;
+          channelName = "nixpkgs-intune";
+          modules = [
+            { networking = { hostName = "jorel"; }; }
+            ./hosts/jorel/configuration.nix
+            nixos-hardware.nixosModules.common-cpu-amd
+            microvm.nixosModules.host
+          ];
+        };
+        oraculo = {
+          channelName = "nixpkgs";
           modules = [
             microvm.nixosModules.microvm
             {
-              networking = { inherit hostName; };
+              networking = { hostName = "oraculo"; };
               microvm = {
                 hypervisor = "qemu";
                 interfaces = [{
@@ -61,38 +85,6 @@
                 }];
               };
             }
-          ] ++ extraModules;
-        };
-    in {
-      checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          nixfmt = {
-            enable = true;
-            excludes = [ "hardware-configuration.nix" ];
-          };
-          shellcheck = { enable = true; };
-        };
-      };
-      packages.${system} = {
-        k1x = k1x.packages.${system}.default;
-        inherit (devenv.packages.${system}.devenv)
-        ;
-      };
-      nixosConfigurations = {
-        jorel = mkNixosSystem nixpkgs {
-          hostName = "jorel";
-          allowUnfree = true;
-          extraModules = [
-            nixos-hardware.nixosModules.common-cpu-amd
-            microvm.nixosModules.host
-          ];
-        };
-        klong = mkNixosSystem nixpkgs { hostName = "klong"; };
-        juju = mkNixosSystem nixpkgs { hostName = "juju"; };
-        oraculo = mkQemuMicroVM nixpkgs {
-          hostName = "oraculo";
-          extraModules = [
             ({ config, pkgs, ... }: {
               system.stateVersion = config.system.nixos.version;
               users = { users = { root = { password = ""; }; }; };
@@ -113,6 +105,16 @@
               };
             })
           ];
+        };
+      };
+      checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixfmt = {
+            enable = true;
+            excludes = [ "hardware-configuration.nix" ];
+          };
+          shellcheck = { enable = true; };
         };
       };
     };

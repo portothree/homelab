@@ -30,12 +30,12 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
-      trustedInterfaces = [ "tailscale0" ];
+      allowedUDPPorts = [ ];
+      trustedInterfaces = [ ];
       checkReversePath = false;
     };
-    nameservers = [ "100.100.100.100" ];
-    search = [ "tailea386.ts.net" ];
+    nameservers = [ ];
+    search = [ ];
   };
   location = {
     # Lisbon, Portugal
@@ -43,6 +43,12 @@
     longitude = -9.142685;
   };
   services = {
+    intune.enable = true;
+    openvpn = {
+      servers = {
+        vowild = { config = "config /root/nixos/openvpn/vowild.ovpn"; };
+      };
+    };
     clight = { enable = false; };
     openssh = {
       enable = true;
@@ -51,10 +57,6 @@
     };
     blueman = { enable = true; };
     udev = { packages = with pkgs; [ ledger-udev-rules android-udev-rules ]; };
-    tailscale = {
-      enable = true;
-      port = 41641;
-    };
     xserver = {
       enable = true;
       layout = "us";
@@ -83,7 +85,7 @@
     };
   };
   environment = {
-    systemPackages = with pkgs; [ wget curl xsecurelock tailscale ];
+    systemPackages = with pkgs; [ wget curl xsecurelock microsoft-edge ];
     variables = { EDITOR = "nvim"; };
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
@@ -107,7 +109,19 @@
       '';
     };
   };
-  nixpkgs = { config = { pulseaudio = true; }; };
+  nixpkgs = {
+    config = { pulseaudio = true; };
+    overlays = [
+      (self: super: rec {
+        microsoft-edge = super.microsoft-edge.overrideAttrs
+          (finalAttrs: previousAttrs: {
+            postFixup = previousAttrs.postFixup + ''
+              wrapProgram "$out/bin/microsoft-edge"  --add-flags --ozone-platform-hint=auto
+            '';
+          });
+      })
+    ];
+  };
   nix = {
     enable = true;
     extraOptions = ''

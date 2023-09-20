@@ -15,40 +15,18 @@
     };
   };
   networking = {
-    useDHCP = false;
-    interfaces = { wlp0s20f3 = { useDHCP = true; }; };
-    nameservers = [ "100.100.100.100" ];
-    search = [ "tailea386.ts.net" ];
-    firewall = {
+    networkmanager = {
       enable = true;
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
-      trustedInterfaces = [ "tailscale0" ];
-      checkReversePath = false;
-    };
-    wireless = {
-      enable = true;
-      userControlled.enable = true;
-      environmentFile = "/etc/nixos/.env";
-      networks = {
-        "@WIRELESS_SSID_HOME@" = {
-          psk = "@WIRELESS_PSK_HOME@";
-          extraConfig =
-            "bssid=@WIRELESS_BSSID_HOME@,freq_list=@WIRELESS_FREQ_HOME@";
-        };
-        "@WIRELESS_SSID_PHONE_HOTSPOT@" = {
-          psk = "@WIRELESS_PSK_PHONE_HOTSPOT@";
-        };
-        "@WIRELESS_SSID_OFFICE@" = { psk = "@WIRELESS_PSK_OFFICE@"; };
-      };
+      plugins = with pkgs; [ networkmanager-openvpn ];
     };
   };
   environment = {
-    systemPackages = with pkgs; [ wget curl xsecurelock tailscale ];
+    systemPackages = with pkgs; [ wget curl xsecurelock ];
     variables = { EDITOR = "nvim"; };
     pathsToLink = [ "/share/icons" "/share/mime" "/share/zsh" ];
   };
   services = {
+    intune.enable = true;
     openssh.enable = true;
     udev = { packages = with pkgs; [ ledger-udev-rules ]; };
     xserver = {
@@ -61,7 +39,6 @@
       };
       displayManager = { startx = { enable = true; }; };
     };
-    tailscale.enable = true;
     blueman.enable = true;
   };
   sound.enable = true;
