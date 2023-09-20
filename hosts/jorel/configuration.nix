@@ -29,8 +29,13 @@
     interfaces = { enp34s0 = { useDHCP = true; }; };
     firewall = {
       enable = true;
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
+      trustedInterfaces = [ "tailscale0" ];
       checkReversePath = false;
     };
+    nameservers = [ "100.100.100.100" ];
+    search = [ "tailea386.ts.net" ];
   };
   location = {
     # Lisbon, Portugal
@@ -52,6 +57,10 @@
     };
     blueman = { enable = true; };
     udev = { packages = with pkgs; [ ledger-udev-rules android-udev-rules ]; };
+    tailscale = {
+      enable = true;
+      port = 41641;
+    };
     xserver = {
       enable = true;
       layout = "us";
@@ -63,9 +72,12 @@
         Option         "TripleBuffer" "on"
       '';
     };
-    tailscalec = {
-      enable = false;
-      searchAddress = "tailea386.ts.net";
+    openvpn = {
+      servers = {
+        vowild = {
+          config = "config /root/nixos/openvpn/vowild.ovpn";
+        };
+      };
     };
   };
   systemd = {
