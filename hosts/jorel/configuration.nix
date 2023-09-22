@@ -10,8 +10,16 @@
   ];
   boot = {
     loader = {
-      systemd-boot = { enable = true; };
-      efi = { canTouchEfiVariables = true; };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {
+        devices = [ "nodev" ];
+        efiSupport = true;
+        enable = true;
+        version = 2;
+      };
     };
     extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback.out ];
     kernelModules = [ "v4l2loopback" "snd-aloop" ];
